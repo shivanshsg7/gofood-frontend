@@ -65,7 +65,7 @@ export default function Card(props) {
       />
       <div className="card-body d-flex flex-column">
         <h5 className="card-title">{foodItem.name || "Unnamed Item"}</h5>
-        <p className="card-text flex-grow-1">This is some important content related to the food item.</p>
+        <p className="card-text flex-grow-1">{foodItem.description || "No description available"}</p>
 
         <div className="container w-100 mt-auto">
           <div className="d-flex justify-content-between align-items-center">
