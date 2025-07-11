@@ -18,11 +18,13 @@ export default function MyOrder() {
       });
 
       const response = await res.json();
-      setOrderData(response.orderData.order_data || []);
+      console.log("Fetched order_data:", response.order_data); // 🔍 Optional: debug
+      setOrderData(response.order_data || []);
     } catch (error) {
       console.error("Error fetching order data:", error);
     }
   };
+
 
   useEffect(() => {
     fetchMyOrder();
