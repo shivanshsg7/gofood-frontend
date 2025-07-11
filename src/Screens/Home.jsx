@@ -14,7 +14,7 @@ const Home = () => {
   const loadData = async () => {
     setLoading(true);
     try {
-      const response = await fetch("https://gofood-backend-oqxu.onrender.com/api/displayData", {
+      const response = await fetch("https://gofood-backend-oqxu.onrender.com/api/foodData", {
 
         method: "POST",
         headers: {
