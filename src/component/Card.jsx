@@ -3,8 +3,9 @@ import { useCartState, useDispatchCart } from './ContextReducer';
 
 export default function Card(props) {
   const dispatch = useDispatchCart();
-  const cartData = useCartState(); // ✅ Needed for checking existing cart items
+  const cartData = useCartState();
 
+  const foodItem = props?.foodItem;
   const options = props.options || {};
   const priceOptions = Object.keys(options);
 
@@ -17,49 +18,53 @@ export default function Card(props) {
     } else if (priceOptions.length === 0 && size !== '') {
       setSize('');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.options]);
 
   const currentPrice = size && options[size] ? parseInt(options[size]) : 0;
   const totalPrice = currentPrice * qty;
 
   const handleAddToCart = async () => {
+    if (!foodItem) return;
+
     const existingItem = cartData.find(
-      (item) => item.id === props.foodItem._id && item.size === size
+      (item) => item.id === foodItem._id && item.size === size
     );
 
     if (existingItem) {
       await dispatch({
         type: "UPDATE_ITEM",
-        id: props.foodItem._id,
+        id: foodItem._id,
         price: totalPrice + existingItem.price,
         qty: existingItem.qty + qty,
         size: size,
       });
-      console.log(`Updated ${props.foodItem.name} (${size}) to ${existingItem.qty + qty} for ₹${totalPrice + existingItem.price} in cart!`);
       return;
     }
 
     await dispatch({
       type: "ADD_ITEM",
-      id: props.foodItem._id,
-      name: props.foodItem.name,
+      id: foodItem._id,
+      name: foodItem.name,
       price: totalPrice,
       qty: qty,
       size: size,
     });
-    console.log(`Added ${qty} of ${props.foodItem.name} (${size}) for ₹${totalPrice} to cart!`);
   };
+
+  // ✅ Safe conditional render — NO hook calls here
+  if (!foodItem) return null;
 
   return (
     <div className="card mt-3" style={{ width: "18rem", maxHeight: "400px", borderRadius: "10px" }}>
       <img
-        src={props.foodItem.img}
+        src={foodItem.img || "https://via.placeholder.com/180x180.png?text=No+Image"}
         className="card-img-top"
-        alt={props.foodItem.name || "Food Item"}
+        alt={foodItem.name || "Food Item"}
         style={{ objectFit: "cover", height: "180px" }}
       />
       <div className="card-body d-flex flex-column">
-        <h5 className="card-title">{props.foodItem.name}</h5>
+        <h5 className="card-title">{foodItem.name || "Unnamed Item"}</h5>
         <p className="card-text flex-grow-1">This is some important content related to the food item.</p>
 
         <div className="container w-100 mt-auto">

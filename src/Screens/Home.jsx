@@ -70,7 +70,7 @@ const Home = () => {
           </form>
         </div>
 
-        {/* Carousel Component (without its internal search bar) */}
+        {/* Carousel Component */}
         <Carousel />
       </div>
 
@@ -89,9 +89,8 @@ const Home = () => {
                 filteredItems.map(item => (
                   <div key={item._id} className="col-12 col-md-6 col-lg-3 mb-4">
                     <Card
-                      foodName={item.name}
+                      foodItem={item}
                       options={item.options?.[0] || {}}
-                      imgsrc={item.img}
                     />
                   </div>
                 ))
@@ -121,7 +120,6 @@ const Home = () => {
               </div>
             </div>
           ))
-
         )}
       </div>
 
