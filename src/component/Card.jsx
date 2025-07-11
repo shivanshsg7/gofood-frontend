@@ -56,7 +56,7 @@ export default function Card(props) {
   if (!foodItem) return null;
 
   return (
-    <div className="card mt-3" style={{ width: "18rem", maxHeight: "400px", borderRadius: "10px" }}>
+    <div className="card mt-3" style={{ width: "18rem", maxHeight: "420px", borderRadius: "10px" }}>
       <img
         src={foodItem.img || "https://via.placeholder.com/180x180.png?text=No+Image"}
         className="card-img-top"
