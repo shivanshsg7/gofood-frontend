@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link,useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 const Login = () => {
   const [credentials, setCredentials] = useState({
 
@@ -16,7 +16,8 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch('http://localhost:5000/api/loginuser', {
+    const response = await fetch('https://gofood-backend-oqxu.onrender.com/api/loginuser', {
+
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -37,7 +38,7 @@ const Login = () => {
     if (json.success) {
       localStorage.setItem("userEmail", credentials.email);
       localStorage.setItem('authtoken', json.authToken);
-      console.log(localStorage.getItem('authtoken') );
+      console.log(localStorage.getItem('authtoken'));
       navigate("/");
     }
   };
